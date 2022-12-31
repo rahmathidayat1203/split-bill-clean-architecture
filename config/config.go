@@ -1,0 +1,39 @@
+package config
+
+import (
+	"os"
+	"split_bills/config/postgres"
+	"strconv"
+
+	"gorm.io/gorm"
+)
+
+type (
+	config struct {
+	}
+
+	Config interface {
+		ServiceName() string
+		ServicePort() int
+		ServiceEnvironment() string
+		Database() *gorm.DB
+	}
+)
+
+func NewConfig() Config {
+	return &config{}
+}
+func (c *config) Database() *gorm.DB {
+	return postgres.InitGorm()
+}
+func (c *config) ServiceName() string {
+	return os.Getenv("SERVICE_NAME")
+}
+func (c *config) ServicePort() int {
+	prt := os.Getenv("PORT")
+	port, _ := strconv.Atoi(prt)
+	return port
+}
+func (c *config) ServiceEnvironment() string {
+	return os.Getenv("ENV")
+}
