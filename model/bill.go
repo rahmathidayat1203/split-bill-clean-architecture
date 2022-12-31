@@ -19,7 +19,7 @@ type (
 		UpdateByID(ctx context.Context, id int, bills *Bills) (*Bills, error)
 		FindByID(ctx context.Context, id int) (*Bills, error)
 		Delete(ctx context.Context, id int) error
-		Fetch(ctx context.Context, id int) error
+		Fetch(ctx context.Context, limit, offset int) ([]*Bills, error)
 	}
 	BillsUseCase interface {
 		GetByID(ctx context.Context, id int) (*Bills, error)
